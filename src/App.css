@@ -1,13 +1,24 @@
-html, body {
+html {
+  height: 100%;
+}
+  
+body {
   margin: 0;
   padding: 0;
+  height: 100%;
+}
+
+#root {
+  min-height: 100%;
 }
 
 .App {
   text-align: center;
+  min-height: 100vh;
   background-color: rgb(198, 201, 202);
   max-width: 100vw;
   font-family: 'Noto Sans';
+  padding-bottom: 20px;
 }
 
 .App-logo {
@@ -117,6 +128,17 @@ html, body {
 .tile-content {
   width: 85%;
   padding: 4px;
+}
+
+.tile-content img {
+  width: auto;
+  height: 100%;
+}
+
+.below-title {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20px;
 }
 
 .tile h1 {
