@@ -131,8 +131,9 @@ body {
 }
 
 .tile-content img {
-  width: auto;
-  height: 100%;
+  max-width: auto;
+  max-height: auto;
+  overflow: hidden;
 }
 
 .below-title {
@@ -147,6 +148,12 @@ body {
   padding: 0.5rem;
 }
 
+.author-name {
+  color: blue;
+  font-size: 0.8rem;
+  margin-left: 20px;
+}
+
 .tile p {
   padding: 4px;
 }
@@ -157,6 +164,7 @@ body {
   display: flex;
   flex-direction: column;
   margin-right: 1rem;
+  margin: auto 0;
 }
 
 .upvote-button {
@@ -202,11 +210,10 @@ body {
 }
 
 .vote-num {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: 700;
   color: grey;
   padding: 0 1rem;
-  margin-left: 12px;
 }
 
 /* Content Bar */

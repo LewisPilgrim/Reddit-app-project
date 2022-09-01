@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 
 export default function Tile(props) {
-    const [votes, setVotes] = useState(0);
+    const score = props.votes;
+    const [votes, setVotes] = useState(score);
     const [voted, setVoted] = useState(false);
     const [seeMore, setSeeMore] = useState(false);
     const [showComments, setShowComments] = useState(false);
+    const [clicked, setClicked] = useState(false);
 
 
     const title = props.title;
+    const author = props.author;
     const postText = props.text;
     const comments = props.comments;
     const image = props.image;
@@ -32,18 +35,26 @@ export default function Tile(props) {
 
     }
 
+    const clickedStatus = () => {
+        if (clicked) {
+            props.clicked = true;
+        } else {
+            props.clicked = false;
+        }
+    }
+
     return (
         <article className='tile'>
             <div className='votes-section'>
                 <button data-testid='upvote-button' title='Upvote' onClick={handleUpvote} className='upvote-button' >&#8657;</button>
-                <p data-testid='upvotes' title='Votes' className='vote-num'>{votes}</p>
+                <p data-testid='upvotes' title='Votes' className='vote-num'>{`${(score/1000).toFixed()}k`}</p>
                 <button data-testid='downvote-button' title='Downvote' onClick={handleDownvote} className='downvote-button' >&#8659;</button>
             </div>
             <div className='tile-content' title={title} >
-                <h1>{title}</h1>
+                <h1>{title}<span className='author-name'>{author}</span></h1>
                 <div className='below-title'>
                     <p className='postText'>
-                        {seeMore ? postText : `${postText.substring(0, 150)}...`}
+                        {seeMore ? clickedStatus : ''}
                     </p>
                     { image !== undefined ? <img src={image} alt={title}/> :  ''}
                 </div>
