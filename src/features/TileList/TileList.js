@@ -4,9 +4,11 @@ import '../../Images/potrait-flipped.jpg';
 
 export default function TileList(props) {
     const [posts, setPosts] = useState([]);
+    const filter = props.filter;
     useEffect(() => {
             const fetchPosts = async () => {
-                const data = await fetch('https://www.reddit.com/r/popular/top.json');
+                console.log(`https://www.reddit.com/r/${filter}/top.json`);
+                const data = await fetch(`https://www.reddit.com/r/${filter}/top.json`);
                 const json = await data.json();
                 const postArray = json.data.children;
                 // console.log(postArray);
@@ -14,26 +16,25 @@ export default function TileList(props) {
         }
         fetchPosts()
     },
-    []);
+    [filter]);
     // console.log(posts);
-    //  useEffect(() => {
-    //     fetch('https://www.reddit.com/r/popular.json').then(postsResponse => setPosts(postsResponse.data));
-    //  }, []);
-    const query = props.filter;
-    console.log(posts);
-    // console.log(query);
-
-    const addPost = ({ id, title, text, comments }) => {
-        setPosts([...posts, {id, title, text, comments }])
-    }
 
     return (
         <div>
             {posts.map((item) => {
-                console.log(item)
+                // console.log(item)
+                const itemUrl = item.data.url;
                 return (
                     
-                    <Tile key={item.data.id} title={item.data.title} author={item.data.author} num_comments={item.data.num_comments} image={item.data.url !== undefined ? item.data.url : undefined} votes={item.data.score} clicked={item.data.clicked} />
+                    <Tile 
+                        key={item.data.id} 
+                        title={item.data.title} 
+                        author={item.data.author} 
+                        num_comments={item.data.num_comments} 
+                        image={itemUrl.includes( '.jpg' || '.png' || '.gif') ? itemUrl : undefined} 
+                        link={itemUrl} votes={item.data.score} 
+                        comments={item.data.permalink}
+                     />
                 )
             })}
             {/* {post.map(post => {
