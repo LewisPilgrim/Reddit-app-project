@@ -14,5 +14,7 @@ I decided to make the site look very similar to the main Reddit site and gave it
 
 The app will be created locally first, using hard coded data and once I have ensured that everything is functioning, I will start to introduce the RedditJSON API so that the content will meet the specifications of the project.
 
-My aim is to use best practice and TDD to complete this project so that it is a clear demonstration of my knowledge and abilities for any potential employers who may see it.
+Once I had the app functioning correctly using the fetch request in React, I began to add in Redux functionality in accordance with the project brief. I don't think that the application is really big or complex enough to warrant using Redux, but I wanted to show that I can implement it effectively.
+
+My aim is to use best practice to complete this project so that it is a clear demonstration of my knowledge and abilities for any potential employers who may see it.
 
