@@ -1,17 +1,20 @@
 import logo from './Images/reddit-logo-svg.svg';
 import './App.css';
-import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import TileList from './features/TileList/TileList';
+import { newSearchTerm, selectQuery } from './features/SearchTerm/searchTermSlice';
 
 
 function App() {
 
-  const [query, setQuery] = useState('');
+  // const [query, setQuery] = useState('');
+  const dispatch = useDispatch();
+  const query = useSelector(selectQuery);
 
-  const handleSubmit= (e) => {
+  const handleSubmit= (e) => { // Submits the query on a press of the 'Enter' key
     if (e.key === 'Enter') {
-      return setQuery(e.target.value)
+      dispatch(newSearchTerm(e.target.value));
     }
   }
 

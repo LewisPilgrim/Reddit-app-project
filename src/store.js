@@ -1,11 +1,9 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore } from "@reduxjs/toolkit";
 
-import tileListReducer from './features/TileList/TileListSlice.js';
+import searchTermReducer from '../src/features/SearchTerm/searchTermSlice';
 
-const store = configureStore({
+export const store = configureStore({
     reducer: {
-        tileList: tileListReducer
+        query: searchTermReducer,
     }
 })
-
-export default store;

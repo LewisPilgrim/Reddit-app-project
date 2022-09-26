@@ -1,50 +1,44 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import Tile from '../Tile/Tile';
 import '../../Images/potrait-flipped.jpg';
+import { useSelector, useDispatch } from 'react-redux';
 
-export default function TileList(props) {
-    const [posts, setPosts] = useState([]);
-    const filter = props.filter;
-    useEffect(() => {
-            const fetchPosts = async () => {
-                console.log(`https://www.reddit.com/r/${filter}/top.json`);
-                const data = await fetch(`https://www.reddit.com/r/${filter}/top.json`);
-                const json = await data.json();
-                const postArray = json.data.children;
-                // console.log(postArray);
-                setPosts(posts => postArray.map(post => post))
+import { selectQuery, selectPosts, addPosts } from '../SearchTerm/searchTermSlice';
+
+// Creates a list of tiles, one for each post in the subreddit
+export default function TileList() {
+    const filter = useSelector(selectQuery);
+    const dispatch = useDispatch();
+    const posts = useSelector(selectPosts);
+    useEffect(() => { //Thunk which will fetch the data for the posts in the subreddit
+        const fetchPosts = async () => {
+            const data = await fetch(`https://www.reddit.com/r/${filter}/top.json`);
+            const json = await data.json();
+            const postArray = json.data.children;
+            dispatch(addPosts(postArray))
         }
         fetchPosts()
     },
-    [filter]);
-    // console.log(posts);
+        [filter]);
+    
 
     return (
         <div>
-            {posts.map((item) => {
-                // console.log(item)
+            {posts ? posts.map((item) => { // Checks whether posts exist under the current search, if they do it will map them with properties, if they do not it will return 'No posts found'
                 const itemUrl = item.data.url;
                 return (
-                    
-                    <Tile 
-                        key={item.data.id} 
-                        title={item.data.title} 
-                        author={item.data.author} 
-                        num_comments={item.data.num_comments} 
-                        image={itemUrl.includes( '.jpg' || '.png' || '.gif') ? itemUrl : undefined} 
-                        link={itemUrl} votes={item.data.score} 
+
+                    <Tile
+                        key={item.data.id}
+                        title={item.data.title}
+                        author={item.data.author}
+                        num_comments={item.data.num_comments}
+                        image={itemUrl.includes('.jpg' || '.png' || '.gif') ? itemUrl : undefined}
+                        link={itemUrl} votes={item.data.score}
                         comments={item.data.permalink}
-                     />
+                    />
                 )
-            })}
-            {/* {post.map(post => {
-                return (
-                    <Tile key={post.index} title='Post title' author='Post author' text='This is the text of the post' />
-                )
-            })} */}
-            {/* {posts.filter((post) => query !== undefined ? post.title.toLowerCase().includes(query.toLowerCase()) : '').map((post) => {
-                return <Tile key={post.key} title={post.title} text={post.text} comments={post.comments} image={post.image} />
-            })} */}
+            }) : 'No posts found'}
         </div>
     )
 }
